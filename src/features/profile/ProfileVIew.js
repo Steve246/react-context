@@ -5,6 +5,7 @@ class ProfileView extends Component {
   static contextType = MainContext;
 
   render() {
+    console.log("profile", this.context);
     const { profile } = this.context;
     return <p> {profile ? profile.name : ""} </p>;
   }

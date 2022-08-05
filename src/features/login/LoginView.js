@@ -14,9 +14,16 @@ class LoginView extends Component {
     return (
       <MainContext.Consumer>
         {(ctx) => {
+          console.log("login", ctx);
           return (
             <>
-              <button onClick={() => ctx.setProfile({ name: "doni" })}>
+              <button
+                onClick={() =>
+                  ctx.setProfile({
+                    name: "doni",
+                  })
+                }
+              >
                 Login
               </button>
             </>
