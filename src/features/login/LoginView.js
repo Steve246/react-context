@@ -1,4 +1,7 @@
 import { Component } from "react";
+import { CombineContextProvider } from "../../context/CombinedContext";
+
+import { DepContext } from "../../context/DependeciesContext";
 import { MainContext } from "../../context/MainContext";
 
 class LoginView extends Component {
@@ -6,31 +9,22 @@ class LoginView extends Component {
   // static contextType = MainContext;
   // cara lain selain atas
 
-  render() {
-    // caranya ini
+  // gak pake static, karena static cma ada 1
 
-    // const { setProfile } = this.context;
-    // sih setProfile akan jadi global
-    return (
-      <MainContext.Consumer>
-        {(ctx) => {
-          console.log("login", ctx);
-          return (
-            <>
-              <button
-                onClick={() =>
-                  ctx.setProfile({
-                    name: "doni",
-                  })
-                }
-              >
-                Login
-              </button>
-            </>
-          );
-        }}
-      </MainContext.Consumer>
-    );
+  static = async () => CombineContextProvider;
+
+  onLogin = async () => {
+    const { ctx, deps } = this.context;
+    try {
+      const response = await deps.services.authenticationService("doni");
+      if (response) {
+        ctx.setProfile({ name: response });
+      }
+    } catch (e) {}
+  };
+
+  render() {
+    return <button onClick={this.onLogin}>Login</button>;
   }
 }
 
