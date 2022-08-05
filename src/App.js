@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import { Component } from "react";
+import { MainContext } from "./context/MainContext";
+import LoginView from "./features/login/LoginView";
+import ProfileView from "./features/profile/ProfileVIew";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    profile: {},
+  };
+
+  setProfile = (profile) => {
+    console.log(profile);
+    this.setState({
+      profile: profile,
+    });
+  };
+
+  render() {
+    const { profile } = this.state;
+    return (
+      <MainContext.Provider
+        value={{
+          profile: profile,
+          setProfile: this.setProfile,
+        }}
+      >
+        <LoginView />
+        <ProfileView />
+      </MainContext.Provider>
+    );
+  }
 }
 
 export default App;
